@@ -1,0 +1,46 @@
+1. EVolution d'une population d'abeille dans une région donnée
+
+LE MESLE Maxime ASSAAD Elsa CHOUVIN Juliette BOUFRAD Inès
+
+2. Le but de notre ARE est d'étudier l'évolution d'une population d'abeilles dans un environnement donné, selon divers facteurs.
+Cette simulation nous permettrait de prévenir une possible extinction des abeilles dans les régions étudiées en adaptant nos
+pratiques dans la vie réelle.
+
+3.   Comment varie une population d'abeilles dans un milieu donné?
+    Les abeilles peuvent elles encore être sauvées en France?
+    Quel facteur est le plus influent sur la disparition des abeilles?
+    Comment l'homme pourrait limiter la disparition des abeilles?
+    
+4. En Europe et aux Etats-Unis, les abeilles disparaissent progressivement, ce qui engendre d'importants problèmes économiques mais
+aussi biologiques étant donné que les abeilles sont les principales responsables de la pollinisation d'une majorité de fleurs.
+Cependant, dans des zones comme Cuba, elles ont tendance au contraire à proliférer.
+
+Ces variations de population sont dues à:
+
+Pour la disparition:
+-Prédation de la part d'animaux insectivores ou frelons
+-Guerres entre colonies
+-Pesticides
+-Pollution
+-Manque de fleurs dans les environs
+
+Pour l'apparition:
+-Forte natalité
+-Abondance de fleurs
+-Introduction par l'homme de nouveaux individus
+-Rûches artificielles
+
+Divers agents interragiront entre eux:
+Abeille+prédateur -> possibilté forte que l'abeille succombe
+Abeille+absence de fleur -> migration ou mort des individus
+Abeille future reine -> fondation d'une nouvelle colonie à proximité
+Reine abeille -> naissance de nouvelles abeilles
+Abeille+pesticides ou forte pollution -> mort de l'abeille
+Fleur+forte pollution -> mort de la fleur
+Abeille d'une rûche A+Abeille d'une rûche B -> possiblement conflit menant à la mort de l'un ou des deux individus
+Abeille+prédateur -> possible mort de l'abeille après une piqure
+prédateur+abeilles -> mort de l'individu suite à de nombreuses piqures ou réaction allergique.
+Viellissement des agents vivants
+
+5. Afin de valider nos simulations sur une zone données, nous disposons de données numériques suffisantes pour chaque facteur et
+sur le résultat final de ces interactions dans la vie courante. 
