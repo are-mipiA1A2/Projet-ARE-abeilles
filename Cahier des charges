@@ -1,4 +1,4 @@
-1. EVolution d'une population d'abeille dans une région donnée
+1. Evolution d'une population d'abeille dans une région donnée
 
 LE MESLE Maxime ASSAAD Elsa CHOUVIN Juliette BOUFRAD Inès
 
@@ -30,6 +30,13 @@ Pour l'apparition:
 -Introduction par l'homme de nouveaux individus
 -Rûches artificielles
 
+5. Afin de valider nos simulations sur une zone données, nous disposons de données numériques suffisantes pour chaque facteur et
+sur le résultat final de ces interactions dans la vie courante. 
+
+6. Nous pensons modéliser cette dynamique en réalisant une zone virtuelle où nos agents évoluront. Cette zone devra être la plus
+réaliste possible, calquée sur une région réelle. Un quadrillage sera effectué avec pour chaque cases diverses variables correspondant
+à différents taux où le nombre d'individus d'une certaine population.
+
 Divers agents interragiront entre eux:
 Abeille+prédateur -> possibilté forte que l'abeille succombe
 Abeille+absence de fleur -> migration ou mort des individus
@@ -42,5 +49,9 @@ Abeille+prédateur -> possible mort de l'abeille après une piqure
 prédateur+abeilles -> mort de l'individu suite à de nombreuses piqures ou réaction allergique.
 Viellissement des agents vivants
 
-5. Afin de valider nos simulations sur une zone données, nous disposons de données numériques suffisantes pour chaque facteur et
-sur le résultat final de ces interactions dans la vie courante. 
+7. Au cours de cette première séance, il serait préférable que le groupe se divise en deux partie:
+-Une partie programmera une ébauche très concise du projet
+-Une autre élaborera des stratégies et cherchera des idées dans le but de rendre la dynamique étudiée la plus réaliste posible, tout
+en restant dans le faisable.
+
+Tous les membres du groupe communiqueront leurs idées régulièrement évidemment.
