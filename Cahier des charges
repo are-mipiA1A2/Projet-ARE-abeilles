@@ -33,8 +33,8 @@ Pour l'apparition:
 5. Afin de valider nos simulations sur une zone données, nous disposons de données numériques suffisantes pour chaque facteur et
 sur le résultat final de ces interactions dans la vie courante. 
 
-6. Nous pensons modéliser cette dynamique en réalisant une zone virtuelle où nos agents évoluront. Cette zone devra être la plus
-réaliste possible, calquée sur une région réelle. Un quadrillage sera effectué avec pour chaque cases diverses variables correspondant
+6. Nous pensons modéliser cette dynamique en réalisant une zone virtuelle où nos agents évolueront. Cette zone devra être la plus
+réaliste possible, calquée sur une région réelle. Un quadrillage sera effectué avec pour chaque case diverses variables correspondant
 à différents taux où le nombre d'individus d'une certaine population.
 
 Divers agents interragiront entre eux:
@@ -55,3 +55,10 @@ Viellissement des agents vivants
 en restant dans le faisable.
 
 Tous les membres du groupe communiqueront leurs idées régulièrement évidemment.
+Répartiton des tâches:
+recheche données précises sur une région 
+
+
+
+
+
