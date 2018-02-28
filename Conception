@@ -1,4 +1,105 @@
 Système:
 
-agents: abeille, reine, prédateur(frelons et autres prédateurs)
-attributs: taux de mortalité et naissance pour les abeilles prédateurs
+agents: abeille, reine, prédateur(frelons et autres prédateurs), futur reine, 
+
+attributs: 
+taux de mortalité( saisons, taux d'abeille dans chaque classe et quantité de miel)et naissance pour les abeilles (reine fécondée,
+miel et nourrice )( en été, abeilles ouvrières: 100 000 et en hiver: 30 000, pour une ruche artificielle :70 000), une colonie est
+mourrante à partir de 1000 abeilles
+naissance des mâles : printemps, chassés en été , espérance de vie:30 jours, 4 000 au maximum 
+phase oeuf-abeille pour la reine: 2 semaines 
+1500 oeufs pondus par la reine/jour au printemps et en été-automne: 200 et en hivers 600 ,durée de vie de la reine: 3 ans ,
+durée de vie d'une ouvrière: 6 semaines au printemps, en autômne 200 jours
+il faut environ  deux semaines pour que l'homme donne naissance à une reine artificiellement, 
+temps d'attente pour que la reine devenue abeille pond des oeufs : 6 à 10 jours,
+phase oeuf-abeille ouvrière: 23 jours 
+pour l'ouvrière : 
+0-3jours --> nettoyeuse ( sert à rien)
+de 3-10 jours --> nourrice ( sans nourrice pas de nouvelle reine et pas de nouvelles naissances après larves)
+de 9-12 jours --> manutentionnaire (transforme pollen en miel, elles mettent 300 jours pour le faire )
+de 11-15 --> maçonne (augmente la taille de la ruche si elle n'a pas déjà atteint sa taille maximale et la taille d'une 
+ruche artificielle)
+de 7-21 jours --> ventilleuse (sert à rien)
+de 15-26jours--> gardienne (protège la ruche des prédateurs)
+20 jours-mort --> butineuse (rapporte le pollen et eau à la ruche( 1/2 litre ))
+fin de vie --> éclaireuse (part à la recherche de nouvelles fleurs et d'un endroit pour faire une nouvelle ruche)
+prédateurs: ours, blaireau,frelon, guèpe, araignée crabe, sphinx, hirondelle
+infection d'une ruche par un parasite 
+taux de consommation du miel par abeille par jour: 3mg
+taux de consommation du miel par les parasites
+Quantité de miel maximale par ruche (30kg)
+1000 fleurs par récolte (13 mg de pollen ammené (75 de nectar), soit 25 mg de miel produit), en moyenne 10 récolte par jour
+4 ruches par hectares
+1kg de cire = 10 kg miel
+1/2 kg de cire par an
+
+
+ours: si l'ours tombe sur une ruche, il pille quasiment tout le miel et tue toutes les abeilles(mort après 40 piqûres)
+blaireau: si le blaireau  tombe sur une ruche, il pille  tout le miel et tue quelques abeilles(mort après 30 piqûres)
+1% d'être allergique : 1 piqûre suffit pour entraîner la mort
+frelon: si le frelon tombe sur une ruche, il tue quelques butineuses ou en masse dans la ruche( tue jusqu'à 40 abeilles/min),
+dès qu'il est repéré par  les abeilles elles le tuent( environ 1000 abeilles), durée de vie :40 jours
+guêpe:  si le guêpe tombe sur une ruche, il tue quelques butineuses ou quelques abeilles dans la ruche( tue environ 2 
+abeilles/min,  et 10 abeilles pour tuer une guêpe), durée de vie:30 jours
+araignée crabe:cachée dans les fleurs, elle mange les abeilles butineuses(durée de vie: 1 an)
+sphinx:immunisé aux abeilles, il mange les abeilles (1/min), durée de vie 2 ans
+hirondelle: mange les abeilles, frelons et guêpes (par dizaine), durée de vie : 5 à 12 ans, tué au bout de 5 piqûres
+
+
+
+
+
+variables: âge, nombre d'abeilles, nombre de prédateurs, quantité de pollen transportée par une abeille,
+taille de la ruche max, intimidation en fonction du nombre des gardiennes, taux d'aparition d'un sphinx dans un mètre carré, 
+probabilité de trouver une araignée crabe sur une fleur, probabilité de l'arrivée  d'un ours ou d'un blaireau, probabilité de 
+l'installation d'un nid de guêpes ou de frelons dans la région,pourcentage d'abeille avant l'introduction d'une ruche
+artificielle, nombre de ruches artificielles implantées
+
+procédure: 
+Abeille+prédateur -> possibilté forte que l'abeille succombe
+Abeille future reine -> fondation d'une nouvelle colonie à proximité
+Reine abeille -> naissance de nouvelles abeilles
+Abeille d'une rûche A+Abeille d'une rûche B -> possiblement conflit menant à la mort de l'un ou des deux individus
+Abeille+prédateur -> possible mort de l'abeille après une piqure
+prédateur+abeilles -> mort de l'individu suite à de nombreuses piqures ou réaction allergique
+homme+parasite -> élimination du parasite dans la ruche
+Essaimage:
+-cas 1: hiver et la reine meurt
+Une nouvelle reine est choisie, mais inféconde car la période nuptiale ne se fait pas en hiver, donc elle donne naissance qu'à 
+des mâles (colonie dégénerescente). La nouvelle reine va migrer dans la nouvelle ruche avec quelques mâles et le reste valide de
+la colonie.
+
+-cas 2: surplus de miel
+Une nouvelle reine va être élevée et prendre la place de l'ancienne, qui va partir avec exactement la moitié de la colonie(chaque
+classe divisée par 2) dans une nouvelle colonie, située à 15m environ.
+
+
+
+environnement:
+zone poluée avec des par-terres de fleurs, zone d'agriculture avec des par-terre de fleurs et présence de pesticides, zone
+sauvagede par-terres de fleurs non exposés à la pollution et aux pesticides, à la pluie
+attributs:
+taux de toxicité des fleurs , 2/3 des fleurs polluées
+nombre de jour de pluie par an dans la région étudiée
+
+
+variables: nombre de fleurs par rapport à une saison , saisons, taux de pollution et de pesticides, cadrillage au mètres carré,
+eau, maladies, taux de pollinisation des fleurs (nombre de butineuses et nombre de fleurs),quantité de nourriture dans les nids 
+de guêpe et frelons, faim des oiseaux 
+
+
+procédure: 
+Abeille+absence de fleur -> migration ou mort des individus
+Abeille+pesticides ou forte pollution -> mort de l'abeille
+Fleur+forte pollution -> mort de la fleur
+fleur+abeille-> fleur
+pluie->pas d'abeille hors de la ruche.
+
+
+
+
+
+
+
+
+
