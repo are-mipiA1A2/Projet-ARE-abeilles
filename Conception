@@ -1,0 +1,4 @@
+Système:
+
+agents: abeille, reine, prédateur(frelons et autres prédateurs)
+attributs: taux de mortalité et naissance pour les abeilles prédateurs
