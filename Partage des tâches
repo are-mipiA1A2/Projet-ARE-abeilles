@@ -1,0 +1,7 @@
+Maxime Le Mesle et Ines Boufrad:
+Nous avons avancé le modèle dynamique. Initialement, notre modèle représentait une ruche comportant un certain nombre d'abeilles
+dans une zone quadrillée d'un hectare à l'échelle. Les éclaireuses repéraient les zones florales alentours (leur nombre et position
+étant aléatoire lors de la création de l'environnement). Puis les butineuses (moitié de la colonie) se déplaçaient vers ces zones
+en empruntant le chemin le plus court. Une nouvelle abeille naissait toutes les 217 secondes. Dans notre modèle actuel, les abeille
+parties en butinage peuvent revenir à la colonie, après être restées un certain temps à butiner, et se reposent un certain temps
+dans la rûche une fois de retour. Le nombre de ruche dans l'environnement est desormais une variable et non plus un paramètre.
