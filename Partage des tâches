@@ -6,7 +6,7 @@ en empruntant le chemin le plus court. Une nouvelle abeille naissait toutes les 
 parties en butinage peuvent revenir à la colonie, après être restées un certain temps à butiner, et se reposent un certain temps
 dans la rûche une fois de retour. Le nombre de ruche dans l'environnement est desormais une variable et non plus un paramètre.
 
-Elsa Assad et Juliette Chouvin :
+Elsa Assaad et Juliette Chouvin :
 Nous avons commencé à réaliser le graphique de sortie pour le modèle dynamique avec les données utilisées. Le graphique représente 
 donc le nombre d’abeilles présentent dans une région en fonction du temps. Cependant nous avons uniquement utilisé le taux de naissance
 comme paramètre pour le moment.
