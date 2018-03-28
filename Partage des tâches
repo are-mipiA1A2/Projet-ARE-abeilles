@@ -1,3 +1,4 @@
+15/03:
 Maxime Le Mesle et Ines Boufrad:
 Nous avons avancé le modèle dynamique. Initialement, notre modèle représentait une ruche comportant un certain nombre d'abeilles
 dans une zone quadrillée d'un hectare à l'échelle. Les éclaireuses repéraient les zones florales alentours (leur nombre et position
@@ -10,3 +11,10 @@ Elsa Assaad et Juliette Chouvin :
 Nous avons commencé à réaliser le graphique de sortie pour le modèle dynamique avec les données utilisées. Le graphique représente 
 donc le nombre d’abeilles présentent dans une région en fonction du temps. Cependant nous avons uniquement utilisé le taux de naissance
 comme paramètre pour le moment.
+
+22/03:
+Maxime Le Mesle et Ines Boufrad:
+La quantité de miel est également une variable implémentée (nécessaire pour nourrir les abeilles). Les rencontres de prédateurs
+à l'extérieur de la rûche ont été ajoutées. Un taux naturel de mortalité a été implémenté, ainsi qu'un système de saisons, car les
+taux de natalité et mortalité varient selon celles-ci. Une variable renvoyée par la fonction principale permet de connaître le 
+nombre d'abeilles total dans la région étudiée.
