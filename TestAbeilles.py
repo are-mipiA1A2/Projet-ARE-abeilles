@@ -3,20 +3,20 @@ import matplotlib.pyplot as plt
 import math
 import matplotlib.animation as anim
 
-N=100 #taille de la région étudiée (côté en m, donc 1 hectare)
+N=10 #taille de la région étudiée (côté en m, donc 1 hectare)
 Nb_ruches=4 #nombre de  ruches
 Liste_ruches=[] #liste des coordonnées de chaque rûche
-for i in range(Nb_ruches):
+while len(Liste_ruches)!=Nb_ruches:
     x=np.random.choice(N)
     x0 = x % N
     y=np.random.choice(N)
     y0 = y % N              #coordonnées de la rûche
-    Liste_ruches.append((x0,y0))
+    if (x0,y0) not in Liste_ruches:
+        Liste_ruches.append((x0,y0))
 
 #Création des zones habitées par des prédateurs
-Sphinx=1 #nombre de zones habitées par un sphinx
-Guepe=1 #nombre de nids de guêpe
-Frelon=1 #nombre de nids de frelon
+Guepe=0 #nombre de nids de guêpe
+Frelon=96 #nombre de nids de frelon
 
 Liste_guepes=[]
 Liste_frelons=[]
@@ -47,16 +47,16 @@ distance=0 #distance initiale du repérage par rapport à la ruche
 Nb_zones=8 #nombre de zones florales à découvrir
 Arrivée=0 #0 signifie que les butineuses partent, 1 qu'elles butinent et 2 qu'elles rentrent à la rûche et 3 qu'elles sont dans la rûche
 Nb_groupes=0 #nombre de groupe de butineuses
-T_groupe=0 #Taille des groupes de butineuses
 qtt_miel=10000000 #qantité de miel dans la rûche en mg
 taux_mort=121 #nombre de secondes avant la mort d'une abeille (naturellement), obtenu en divisant l'espérance de vie d'une abeille par le nombre d'abeilles
 Liste_direct=[] #Liste des directions à prendre pour aller vers une fleur
 Temps_recolte_passe=0 #temps réeelement passé par les butineuses sur les fleurs actuellement
+parasitage=0 # 0: non infectée, 1: infectée, 2: gravement infectée
 for i in Liste_ruches:
     x0,y0=i
-    Info_ruches.append((x0,y0,Nb_abeilles,Nb_ab_dedans,Nb_but_dehors,reperage,liste_reper,distance,Nb_zones,Arrivée,Nb_groupes,T_groupe,Liste_direct,Temps_recolte_passe,qtt_miel))
+    Info_ruches.append((x0,y0,Nb_abeilles,Nb_ab_dedans,Nb_but_dehors,reperage,liste_reper,distance,Nb_zones,Arrivée,Nb_groupes,Liste_direct,Temps_recolte_passe,qtt_miel,parasitage))
 nb_steps=5000 #nombre d'images total
-Nb_zone_fleur= 200 #nombre de zones florales
+Nb_zone_fleur= 8 #nombre de zones florales
 liste_zone_fleur=[] #liste des coordonnées des zones florales
 while len(liste_zone_fleur)<Nb_zone_fleur:
     x=np.random.choice(N)
@@ -111,29 +111,64 @@ def simulation():
                 if saison=='printemps':
                     taux_nat=216
                     saison='été'
-                    taux_mort=abs(3628800/(AB_tot/Nb_ruches))#esprérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
+                    taux_mort=int(3628800/(AB_tot/Nb_ruches))#esprérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
                 elif saison=='été':
                     saison='automne'
-                    taux_mort=abs(17280000/(AB_tot/Nb_ruches)) #esprérance de vie de 200 jours par le nombre d'abeilles moyen dans une  ruche
+                    taux_mort=int(17280000/(AB_tot/Nb_ruches)) #esprérance de vie de 200 jours par le nombre d'abeilles moyen dans une  ruche
                 elif saison=='automne':
                     taux_nat=144
                     saison='hiver'
-                    taux_mort=abs(3628800/(AB_tot/Nb_ruches)) #esprérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
+                    taux_mort=int(3628800/(AB_tot/Nb_ruches)) #esprérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
                 elif saison=='hiver':
                     taux_nat=57
                     saison='printemps'
-                    taux_mort=abs(3628800/(AB_tot/Nb_ruches)) #esprérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
+                    taux_mort=int(3628800/(AB_tot/Nb_ruches)) #espérance de vie de 42 jours par le nombre d'abeilles moyen dans une  ruche
                 j=0
-                    
 
+        if saison=='été' and j==0 and s==0:
+            k=np.random.choice(18,79)
+            infection=int(k*Nb_ruches/100)
+            Liste_infect=[] #liste des coordonnées des ruches infectée par des parasites
+            while len(Liste_infect)!= infection:
+                i=np.random.choice(Nb_ruches)
+                if Liste_ruches[i] not in Liste_infect:
+                    Liste_infect.append(Liste_ruches[i])
+
+        if saison=='été' and s==0 and j==45:
+            k=np.random.choice(18,79)
+            infection=int(k*Nb_ruches/100)
+            Liste_infect=[] #liste des coordonnées des ruches infectée par des parasites
+            while len(Liste_infect)!= infection:
+                i=np.random.choice(Nb_ruches)
+                if Liste_ruches[i] not in Liste_infect:
+                    Liste_infect.append(Liste_ruches[i])
         
         Info_ruches_copy=[]
         for k in Info_ruches:
-            x0, y0, Nb_abeilles, Nb_ab_dedans, Nb_but_dehors, reperage, liste_reper, distance, Nb_zones, Arrivée, Nb_groupes, T_groupe, Liste_direct, Temps_recolte_passe,qtt_miel=k
+            x0, y0, Nb_abeilles, Nb_ab_dedans, Nb_but_dehors, reperage, liste_reper, distance, Nb_zones, Arrivée, Nb_groupes, Liste_direct, Temps_recolte_passe,qtt_miel,parasitage=k
 
+
+            if saison=='été' and j==0 and s==0:
+                if (x0,y0) in Liste_infect:
+                    parasitage=1           
+
+            if saison=='été' and s==0 and j==45:
+                if (x0,y0) in Liste_infect and parasitage==0:
+                    parasitage=1
+                if (x0,y0) in Liste_infect and parasitage==1:
+                    parasitage=2
+                
+            if saison=='automne' and s==0 and j==0:
+                parasitage=0 
 
             if s==60000: #Au bout d'un certain temps, les abeilles vont consommer le miel
-                qtt_miel=qtt_miel-3*Nb_abeilles-14000 # 3mg mangés par chaque abeille, 14g utilisés pour la production de cire
+                if qtt_miel-3*Nb_abeilles-14000<0: # 3mg mangés par chaque abeille, 14g utilisés pour la production de cire
+                    if qtt_miel-3*Nb_abeilles<0:
+                        Nb_abeilles=int(qtt_miel/3)
+                        Nb_ab_dedans=int(qtt_miel/3)
+                    qtt_miel=0
+                else:
+                    qtt_miel=qtt_miel-3*Nb_abeilles-14000 
                 
 
             if s/taux_mort==int(s/taux_mort): #mort d'une abeille naturelle
@@ -161,9 +196,9 @@ def simulation():
             if reperage>=Nb_zones:
             
                 if Nb_but_dehors==0 and Arrivée==0 and s<=43200: #Avant que la moitié de la journée soit écoulée
-                    Nb_butineuses=abs(Nb_abeilles/2)
+                    Nb_butineuses=int(Nb_abeilles/2)
                     Nb_groupes=reperage #nombre de groupe de butineuses
-                    T_groupe=abs(Nb_butineuses/Nb_groupes) #nombre d'abeilles dans un groupe
+                    T_groupe=int(Nb_butineuses/Nb_groupes) #nombre d'abeilles dans un groupe
                     Liste_direct=[] #liste des directions pour chaque groupe
                     for k in range(Nb_groupes):
                         Liste_direct.append(((x0,y0),liste_reper[k],T_groupe)) #coordonnées du groupe, de sa destination, son nombre de membres
@@ -205,25 +240,54 @@ def simulation():
                                     action=action+1
                                     if (a,b) in Liste_guepes and saison!='hiver': #le groupe est à la position d'un nid de guêpes (qui n'attaquent pas en hiver)
                                         T_groupe=T_groupe-5
+                                        if T_groupe<0:
+                                            T_groupe=0
                                         Nb_but_dehors=Nb_but_dehors-5
+                                        if Nb_but_dehors<0:
+                                            Nb_but_dehors=0
                                         Nb_abeilles=Nb_abeilles-5
+                                        if Nb_abeilles<0:
+                                            Nb_abeilles=0
                                     if (a,b) in Liste_frelons and saison!='hiver': #le groupe est à la position d'un nid de frelons (qui n'attaquent pas en hiver)
-                                        T_groupe=T_groupe-75
+                                        TT_groupe=T_groupe-75
+                                        if T_groupe<0:
+                                            T_groupe=0
                                         Nb_but_dehors=Nb_but_dehors-75
+                                        if Nb_but_dehors<0:
+                                            Nb_but_dehors=0
                                         Nb_abeilles=Nb_abeilles-75
+                                        if Nb_abeilles<0:
+                                            Nb_abeilles=0
+                                Liste_dir.append(((a,b),(c,d),T_groupe))
                                 terrain[a][b]=terrain[a][b]+T_groupe
                             elif (a,b)==(c,d):
                                 if (a,b) in Liste_guepes and saison!='hiver': #le groupe est à la position d'un nid de guêpes (qui n'attaquent pas en hiver)
                                     T_groupe=T_groupe-2
+                                    if T_groupe<0:
+                                        T_groupe=0
                                     Nb_but_dehors=Nb_but_dehors-2
+                                    if Nb_but_dehors<0:
+                                        Nb_but_dehors=0
                                     Nb_abeilles=Nb_abeilles-2
+                                    if Nb_abeilles<0:
+                                        Nb_abeilles=0
                                     terrain[a][b]=terrain[a][b]-2
+                                    if terrain[a][b]<0:
+                                        terrain[a][b]=0
                                 if (a,b) in Liste_frelons and saison!='hiver': #le groupe est à la position d'un nid de frelons (qui n'attaquent pas en hiver)
                                     T_groupe=T_groupe-25
+                                    if T_groupe<0:
+                                        T_groupe=0
                                     Nb_but_dehors=Nb_but_dehors-25
+                                    if Nb_but_dehors<0:
+                                        Nb_but_dehors=0
                                     Nb_abeilles=Nb_abeilles-25
+                                    if Nb_abeilles<0:
+                                        Nb_abeilles=0
                                     terrain[a][b]=terrain[a][b]-25
-                            Liste_dir.append(((a,b),(c,d),T_groupe))
+                                    if terrain[a][b]<0:
+                                        terrain[a][b]=0
+                                Liste_dir.append(((a,b),(c,d),T_groupe))
                         Liste_direct=Liste_dir.copy()
                         valid=0 #permet de vérifier si toutes les abeilles sont arrivées à destination
                         for k in Liste_direct:
@@ -232,28 +296,59 @@ def simulation():
                                 valid=valid+1
                         if valid == len(Liste_direct):
                             Arrivée=1
+                            Liste_dir=[]
                             for k in Liste_direct:
                                 (a,b),(c,d),T_groupe=k
                                 crabe_araignée=np.random.choice(100) #probabilité qu'un crabe araignée se situe dans cette zone et mange une abeille
                                 if crabe_araignée==50:
                                     T_groupe=T_groupe-1
+                                    if T_groupe<0:
+                                        T_groupe=0
                                     terrain[a][b]=terrain[a][b]-1
+                                    if terrain[a][b]<0:
+                                        terrain[a][b]=0
                                     Nb_but_dehors=Nb_but_dehors-1
+                                    if Nb_but_dehors<0:
+                                        Nb_but_dehors=0
                                     Nb_abeilles=Nb_abeilles-1
-                                  
+                                    if Nb_abeilles<0:
+                                        Nb_abeilles=0
+                                Liste_dir.append(((a,b),(c,d),T_groupe))
+                            Liste_direct=Liste_dir.copy()
                                   
                     elif Arrivée==1:
                         Temps_recolte_passe=Temps_recolte_passe+1
-                        if (a,b) in Liste_guepes and saison!='hiver': #le groupe est à la position d'un nid de guêpes (qui n'attaquent pas en hiver)
-                            T_groupe=T_groupe-2
-                            Nb_but_dehors=Nb_but_dehors-2
-                            Nb_abeilles=Nb_abeilles-2
-                            terrain[a][b]=terrain[a][b]-2
-                        if (a,b) in Liste_frelons and saison!='hiver': #le groupe est à la position d'un nid de frelons (qui n'attaquent pas en hiver)
-                            T_groupe=T_groupe-25
-                            Nb_but_dehors=Nb_but_dehors-25
-                            Nb_abeilles=Nb_abeilles-25
-                            terrain[a][b]=terrain[a][b]-25
+                        Liste_dir=[]
+                        for k in Liste_direct:
+                            (a,b),(c,d),T_groupe=k
+                            if (a,b) in Liste_guepes and saison!='hiver': #le groupe est à la position d'un nid de guêpes (qui n'attaquent pas en hiver)
+                                T_groupe=T_groupe-2
+                                if T_groupe<0:
+                                    T_groupe=0
+                                Nb_but_dehors=Nb_but_dehors-2
+                                if Nb_but_dehors<0:
+                                    Nb_but_dehors=0
+                                Nb_abeilles=Nb_abeilles-2
+                                if Nb_abeilles<0:
+                                    Nb_abeilles=0
+                                terrain[a][b]=terrain[a][b]-2
+                                if terrain[a][b]<0:
+                                    terrain[a][b]=0
+                            if (a,b) in Liste_frelons and saison!='hiver': #le groupe est à la position d'un nid de frelons (qui n'attaquent pas en hiver)
+                                T_groupe=T_groupe-25
+                                if T_groupe<0:
+                                    T_groupe=0
+                                Nb_but_dehors=Nb_but_dehors-25
+                                if Nb_but_dehors<0:
+                                    Nb_but_dehors=0
+                                Nb_abeilles=Nb_abeilles-25
+                                if Nb_abeilles<0:
+                                    Nb_abeilles=0
+                                terrain[a][b]=terrain[a][b]-25
+                                if terrain[a][b]<0:
+                                    terrain[a][b]=0
+                            Liste_dir.append(((a,b),(x0,y0),T_groupe))
+                        Liste_direct=Liste_dir.copy()
                         if Temps_recolte_passe==Temps_recolte:
                             Temps_recolte_passe=0
                             Arrivée=2
@@ -262,6 +357,7 @@ def simulation():
                                 (a,b),(c,d),T_groupe=k
                                 Liste_dir.append(((a,b),(x0,y0),T_groupe))
                             Liste_direct=Liste_dir.copy()
+                            
                     elif Arrivée==2:
                         Liste_dir=[]
                         for k in Liste_direct:
@@ -296,14 +392,26 @@ def simulation():
                                     action=action+1
                                     if (a,b) in Liste_guepes and saison!='hiver': #le groupe est à la position d'un nid de guêpes (qui n'attaquent pas en hiver)
                                         T_groupe=T_groupe-5
+                                        if T_groupe<0:
+                                            T_groupe=0
                                         Nb_but_dehors=Nb_but_dehors-5
+                                        if Nb_but_dehors<0:
+                                            Nb_but_dehors=0
                                         Nb_abeilles=Nb_abeilles-5
+                                        if Nb_abeilles<0:
+                                            Nb_abeilles=0
                                     if (a,b) in Liste_frelons and saison!='hiver': #le groupe est à la position d'un nid de frelons (qui n'attaquent pas en hiver)
                                         T_groupe=T_groupe-75
+                                        if T_groupe<0:
+                                            T_groupe=0
                                         Nb_but_dehors=Nb_but_dehors-75
+                                        if Nb_but_dehors<0:
+                                            Nb_but_dehors=0
                                         Nb_abeilles=Nb_abeilles-75
+                                        if Nb_abeilles<0:
+                                            Nb_abeilles=0
                                 terrain[a][b]=terrain[a][b]+T_groupe
-                            Liste_dir.append(((a,b),(c,d),T_groupe))
+                                Liste_dir.append(((a,b),(c,d),T_groupe))
                         Liste_direct=Liste_dir.copy()
                         valid=0 #permet de vérifier si toutes les abeilles sont arrivées à destination
                         for k in Liste_direct:
@@ -313,9 +421,16 @@ def simulation():
                         if valid == len(Liste_direct):
                             Arrivée=3
                             Nb_ab_dedans=Nb_ab_dedans+Nb_but_dehors
-                            qtt_miel=qtt_miel+13*Nb_but_dehors #chaque abeille ramène 13 mg de miel
+                            if parasitage==0:
+                                qtt_miel=qtt_miel+13*Nb_but_dehors #chaque abeille ramène 13 mg de miel
+                            if parasitage==1:
+                                qtt_miel=qtt_miel+13*Nb_but_dehors-3296 #3kg de miel perdus en été  avec parasitage de lvl 1
+                            if parasitage==2:
+                                qtt_miel=qtt_miel+13*Nb_but_dehors-6593 #6kg de miel perdus en été  avec parasitage de lvl 2
                             if qtt_miel>30000000: #capacité de miel maximum dans une rûche en mg
                                 qtt_miel=30000000
+                            if qtt_miel<0:
+                                qtt_miel=0
                             Nb_but_dehors=0
                 elif Arrivée==3 and Nb_but_dehors==0:
                     Temps_recolte_passe=Temps_recolte_passe+1
@@ -324,7 +439,7 @@ def simulation():
                         Arrivée=0
                 
                     
-            Info_ruches_copy.append((x0,y0,Nb_abeilles,Nb_ab_dedans,Nb_but_dehors,reperage,liste_reper,distance,Nb_zones,Arrivée,Nb_groupes,T_groupe,Liste_direct,Temps_recolte_passe,qtt_miel))
+            Info_ruches_copy.append((x0,y0,Nb_abeilles,Nb_ab_dedans,Nb_but_dehors,reperage,liste_reper,distance,Nb_zones,Arrivée,Nb_groupes,Liste_direct,Temps_recolte_passe,qtt_miel,parasitage))
             Nb_abeilles_tot=Nb_abeilles_tot+Nb_abeilles
         Liste_Nb_abeilles_tot.append(Nb_abeilles_tot)
         Info_ruches=Info_ruches_copy.copy()
@@ -333,7 +448,10 @@ def simulation():
  
 results,Liste_Nb_abeilles_tot=simulation()
 
-    
+
+for i in range(len(results)):
+    print(results[i],'/n',i)
+"""
 fig = plt.figure()
 
 # results[i] contient l'état au pas de temps i sous forme de matrice
@@ -347,4 +465,4 @@ def updatefig(i):
 
 ani = anim.FuncAnimation(fig, updatefig, frames=1000, interval=50, blit=True)
 
-plt.show()
+plt.show()"""
