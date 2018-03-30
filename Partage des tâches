@@ -22,3 +22,8 @@ nombre d'abeilles total dans la région étudiée.
 Elsa Assaad et Juliette Chouvin :
 Nous avons finis le graphique de sortie avec comme donnée le nombre de naissances. Nous avons ensuite commencé à modélisé le 
 meme modele en ajoutant des paramètres comme les facteurs exterieurs et le nombre de mortalité.
+
+30/03:
+Maxime Le Mesle et Elsa Assaad :
+Nous avons ajouté les parasites (qui diminuent la quantité de miel produit) et réglé de nombreux bugs glissés dans le programme lors
+des dernières séances.
