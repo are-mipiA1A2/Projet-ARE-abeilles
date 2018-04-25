@@ -441,7 +441,7 @@ def simulation():
                                 terrain[a][b]=terrain[a][b]+T_groupe
                                 
         results.append(terrain.copy())"""
-    return(Liste_Nb_abeilles_tot,Nb_ruches,)
+    return(Liste_Nb_abeilles_tot,Nb_ruches,Liste_qtt_miel_moy)
  
 simulation()
 
