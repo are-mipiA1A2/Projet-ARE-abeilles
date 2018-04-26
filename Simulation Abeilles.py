@@ -402,11 +402,11 @@ def simulation():
                 for k in Liste_direct:
                     (a,b),(c,d),T_groupe=k
                     Nb_abeilles=Nb_abeilles+T_groupe
-                    qtt_miel=qtt_miel+13*T_groupe #chaque abeille ramène 13 mg de miel
+                    qtt_miel=qtt_miel+(13-taux_pol)*T_groupe #chaque abeille ramène 13 mg de miel
                     if parasitage==1:
-                        qtt_miel=qtt_miel-3296 #3kg de miel perdus en été  avec parasitage de lvl 1
+                        qtt_miel=qtt_miel-(3296-329*taux_pol) #3kg de miel perdus en été  avec parasitage de lvl 1
                     if parasitage==2:
-                        qtt_miel=qtt_miel-6593 #6kg de miel perdus en été  avec parasitage de lvl 2
+                        qtt_miel=qtt_miel-(6593-659*taux_pol) #6kg de miel perdus en été  avec parasitage de lvl 2
                     if qtt_miel>30000000: #capacité de miel maximum dans une rûche en mg
                         essaimage=1
                         qtt_miel=30000000
