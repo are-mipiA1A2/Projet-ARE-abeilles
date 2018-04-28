@@ -118,7 +118,7 @@ def simulation():
                     taux_nat=27
                     saison='hiver'
                 elif saison=='hiver':
-                    taux_nat=52
+                    taux_nat=63
                     saison='printemps'
                     taux_mort=41
                 jour=0
