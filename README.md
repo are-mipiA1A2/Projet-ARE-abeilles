@@ -11,3 +11,5 @@ Sujet: étudier l'évolution d'une population d'abeilles dans une région donné
 Lien du [programme](https://github.com/are-mipiA1A2/Projet-ARE-abeilles/blob/master/Simulation%20Abeilles.py)
 
 Lien du [dossier](https://github.com/are-mipiA1A2/Projet-ARE-abeilles/blob/master/Dossier%20ARE.odt)
+
+Lien de la [diapo](https://github.com/are-mipiA1A2/Projet-ARE-abeilles/blob/master/ARE%20DIAPO(1).pptx)
