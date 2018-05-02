@@ -7,3 +7,8 @@ BOUFRAD Inès
 
 
 Sujet: étudier l'évolution d'une population d'abeilles dans une région donnée, selon l'impact humain (pesticides et pollutions), prédation (frelon et co...), présence de fleurs...
+
+
+
+
+Lien du [programme](https://github.com/are-mipiA1A2/Projet-ARE-abeilles/blob/master/Simulation%20Abeilles.py)
