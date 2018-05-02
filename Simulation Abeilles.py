@@ -5,101 +5,77 @@ import matplotlib.animation as anim
 import random
 
 N=100 #taille de la région étudiée (côté en m, donc 1 hectare)
-Nb_ruches=4 #nombre de  ruches
-Liste_ruches=[] #liste des coordonnées de chaque rûche
-while len(Liste_ruches)!=Nb_ruches:
-    x0=random.randint(0,N-1)
-    y0=random.randint(0,N-1)             #coordonnées de la rûche
-    if (x0,y0) not in Liste_ruches:
-        Liste_ruches.append((x0,y0))
 
-#Création des zones habitées par des prédateurs
-Guepe=3 #nombre de nids de guêpe
-Frelon=1 #nombre de nids de frelon
-
-Liste_guepes=[]
-while len(Liste_guepes)!=Guepe:
-    x0=random.randint(0,N-1)
-    y0=random.randint(0,N-1)           #coordonnées du nid de guepes
-    if (x0,y0) not in Liste_guepes and (x0,y0) not in Liste_ruches:
-        Liste_guepes.append((x0,y0,1))
-while len(Liste_guepes)!=Frelon+Guepe:
-    x0=random.randint(0,N-1)
-    y0=random.randint(0,N-1)             #coordonnées du nid de frelons
-    if (x0,y0) not in Liste_guepes and (x0,y0) not in Liste_ruches:
-        Liste_guepes.append((x0,y0,2))
-
-
-
-Info_ruches=[] #Toutes les informations sur chaque ruche
-Nb_abeilles=12000 #nombre initial d'abeilles dans la ruche
-reperage=0 #nombre de zones florales découvertes
-liste_reper=[] #liste des zones florales découvertes
-distance=0 #distance initiale du repérage par rapport à la ruche
-Nb_zones=8 #nombre de zones florales à découvrir
-Arrivée=0 #0 signifie que les butineuses partent, 1 qu'elles butinent et 2 qu'elles rentrent à la rûche et 3 qu'elles sont dans la rûche
-qtt_miel=10000000 #qantité de miel dans la rûche en mg
-taux_mort=41 #nombre de décès en une heure (naturellement), obtenu en divisant l'espérance de vie d'une abeille par le nombre d'abeilles
-Liste_direct=[] #Liste des directions à prendre pour aller vers une fleur
-parasitage=0 # 0: non infectée, 1: infectée, 2: gravement infectée
-essaimage=0 # 0: ruche normale ; 1: duplication ; 2: migration
-for i in Liste_ruches:
-    x0,y0=i
-    age_reine=random.randint(0,1094) #une reine peut vivre jusqu'à 3 ans
-    esperance_reine=random.randint(1095,1460)
-    Info_ruches.append((x0,y0,Nb_abeilles,reperage,liste_reper,distance,Liste_direct,qtt_miel,parasitage,essaimage,age_reine,esperance_reine))
-nb_steps=91*24*4 #nombre d'heures écoulées
-Nb_zone_fleur= 120 #nombre de zones florales
-liste_zone_fleur=[] #liste des coordonnées des zones florales
-while len(liste_zone_fleur)<Nb_zone_fleur:
-    x1=random.randint(0,N-1)
-    y1=random.randint(0,N-1)
-    if (x1,y1) not in liste_zone_fleur and (x1,y1) not in Liste_ruches:
-        liste_zone_fleur.append((x1,y1))
-taux_nat=63 #nombre de naissances en une heure
-h=0 #nombre d'heures écoulées
-jour=0 #nombre de jours écoulés
-saison='printemps' #saison de départ
-Nb_recoltes=0 #Nb de récoltes effectuées dans la journée
-Nb_abeilles_tot=Nb_ruches*Nb_abeilles #nombre total d'abeilles dans la région
-Liste_Nb_abeilles_tot=[Nb_abeilles_tot]
-Liste_qtt_miel_moy=[qtt_miel/Nb_ruches]
-taux_pol=0 #indice de pollution et pesticides, entre 0 et 10
-
-
-
-terrain=np.zeros([N,N])
-
-for k in Info_ruches:
-    x0,y0,Nb_abeilles,_,_,_,_,_,_,_,_,_=k
-    terrain[x0][y0]=Nb_abeilles
-
-
-results=[]
-results.append(terrain.copy())
-
-def simulation():
+def simulation(Liste_guepes):
     global h
     global jour
     global N
     global Liste_ruches
-    global liste_zone_fleur
-    global Guepe
-    global Frelon
     global Nb_recoltes
     global Info_ruches
     global taux_nat
     global taux_mort
     global saison
     global Nb_ruches
-    global Liste_guepes
+    global taux_pol
     global Nb_zones
     global Liste_Nb_abeilles_tot
-    global taux_pol
+    global Guepe
+    global Frelon
+    global Nb_zones_fleur
+    global liste_zone_fleur
+
+
+    Nb_zone_fleur= 120 #nombre de zones florales
+    liste_zone_fleur=[] #liste des coordonnées des zones florales
+    while len(liste_zone_fleur)<Nb_zone_fleur:
+        x1=random.randint(0,N-1)
+        y1=random.randint(0,N-1)
+        if (x1,y1) not in liste_zone_fleur:
+            liste_zone_fleur.append((x1,y1))
+    
+    Nb_ruches=4 #nombre de  ruches
+    Liste_ruches=[] #liste des coordonnées de chaque rûche
+    while len(Liste_ruches)!=Nb_ruches:
+        x0=random.randint(0,N-1)
+        y0=random.randint(0,N-1)             #coordonnées de la rûche
+        if (x0,y0) not in Liste_ruches and (x0,y0) not in liste_zone_fleur and (x0,y0) not in Liste_guepes:
+            Liste_ruches.append((x0,y0))
+
+
+    Info_ruches=[] #Toutes les informations sur chaque ruche
+    Nb_abeilles=12000 #nombre initial d'abeilles dans la ruche
+    reperage=0 #nombre de zones florales découvertes
+    liste_reper=[] #liste des zones florales découvertes
+    distance=0 #distance initiale du repérage par rapport à la ruche
+    Nb_zones=8 #nombre de zones florales à découvrir
+    Arrivée=0 #0 signifie que les butineuses partent, 1 qu'elles butinent et 2 qu'elles rentrent à la rûche et 3 qu'elles sont dans la rûche
+    qtt_miel=10000000 #qantité de miel dans la rûche en mg
+    taux_mort=41 #nombre de décès en une heure (naturellement), obtenu en divisant l'espérance de vie d'une abeille par le nombre d'abeilles
+    Liste_direct=[] #Liste des directions à prendre pour aller vers une fleur
+    parasitage=0 # 0: non infectée, 1: infectée, 2: gravement infectée
+    essaimage=0 # 0: ruche normale ; 1: duplication ; 2: migration
+    for i in Liste_ruches:
+        x0,y0=i
+        age_reine=random.randint(0,1094) #une reine peut vivre jusqu'à 3 ans
+        esperance_reine=random.randint(1095,1460)
+        Info_ruches.append((x0,y0,Nb_abeilles,reperage,liste_reper,distance,Liste_direct,qtt_miel,parasitage,essaimage,age_reine,esperance_reine))
+    nb_steps=91*24*8 #nombre d'heures écoulées
+
+    taux_nat=63 #nombre de naissances en une heure
+    h=0 #nombre d'heures écoulées
+    jour=0 #nombre de jours écoulés
+    saison='printemps' #saison de départ
+    Nb_recoltes=0 #Nb de récoltes effectuées dans la journée
+    Nb_abeilles_tot=Nb_ruches*Nb_abeilles #nombre total d'abeilles dans la région
+    Liste_Nb_abeilles_tot=[Nb_abeilles_tot]
+    Liste_qtt_miel_tot=[qtt_miel*Nb_ruches]
+    taux_pol=0
+
 
     for i in range(nb_steps):
         Nb_abeilles_tot=0
-        qtt_miel_moy=0
+        qtt_miel_tot=0
         h=h+1
 
         if h==24: #une journée écoulée
@@ -144,9 +120,6 @@ def simulation():
         Info_ruches_copy=[]
         for k in Info_ruches:
             x0,y0,Nb_abeilles,reperage,liste_reper,distance,Liste_direct,qtt_miel,parasitage,essaimage,age_reine,esperance_reine=k
-
-            if Nb_abeilles<4500:
-                essaimage=2
     
             if h==0: #vieillissement de la reine
                 age_reine=age_reine+1
@@ -185,7 +158,7 @@ def simulation():
             if saison=='automne' and h==0 and j==0:
                 parasitage=0 
 
-            if essaimage==1 and saison=='printemps':
+            if essaimage==1 and saison=='printemps' and jour==0:
                 place_indispo=set() #permet de vérifer s'il y a de la place pour une nouvelle ruche
                 for k in Liste_ruches:
                     x,y=k
@@ -422,8 +395,8 @@ def simulation():
             """print(Nb_abeilles,h)""" #vérification rapide en cas de bug majeur
             Info_ruches_copy.append((x0,y0,Nb_abeilles,reperage,liste_reper.copy(),distance,Liste_direct.copy(),qtt_miel,parasitage,essaimage,age_reine,esperance_reine))
             Nb_abeilles_tot=Nb_abeilles_tot+Nb_abeilles
-            qtt_miel_moy=qtt_miel_moy+qtt_miel
-        Liste_qtt_miel_moy.append(qtt_miel_moy/Nb_ruches)
+            qtt_miel_tot=qtt_miel_tot+qtt_miel
+        Liste_qtt_miel_tot.append(qtt_miel_tot)
         Liste_Nb_abeilles_tot.append(Nb_abeilles_tot)
         Info_ruches=Info_ruches_copy.copy()
     
@@ -441,21 +414,41 @@ def simulation():
                                 terrain[a][b]=terrain[a][b]+T_groupe
                                 
         results.append(terrain.copy())"""
-    return(Liste_Nb_abeilles_tot,Nb_ruches,Liste_qtt_miel_moy)
+    return(Liste_Nb_abeilles_tot,Nb_ruches,Liste_qtt_miel_tot)
  
-simulation()
+
+y=[]
+Liste_guepes=[]
+for i in range(0,6):
+    print(i)
+    #Création des zones habitées par des prédateurs
+    Guepe=2*i #nombre de nids de guêpe
+    Frelon=i #nombre de nids de frelon
+    Liste_guepes[:]=[]
+    while len(Liste_guepes)!=Guepe:
+        x0=random.randint(0,N-1)
+        y0=random.randint(0,N-1)           #coordonnées du nid de guepes
+        if (x0,y0) not in Liste_guepes:
+            Liste_guepes.append((x0,y0,1))
+    while len(Liste_guepes)!=Frelon+Guepe:
+        x0=random.randint(0,N-1)
+        y0=random.randint(0,N-1)             #coordonnées du nid de frelons
+        if (x0,y0) not in Liste_guepes:
+            Liste_guepes.append((x0,y0,2))
+    Abeilles,_,_=simulation(Liste_guepes)
+    AB=Abeilles.copy()
+    k=AB[91*24*5]
+    Abeilles[:]=[]
+    y.append(k)
 
 
+x=[i for i in range(0,6)]
 
 """for i in range(len(results)):
     print(results[i],'\n',i)""" #vérification assez rapide pour détecter de potentiels bugs
-"""
-fig = plt.figure()
-# results[i] contient l'état au pas de temps i sous forme de matrice
-im = plt.imshow(results[0], animated=True)
-def updatefig(i):
-    im.set_array(results[i+1])
-    
-    return im,
-ani = anim.FuncAnimation(fig, updatefig, frames=1000, interval=50, blit=True)
-plt.show() #affiche la simulation"""
+
+plt.title("Nombre d'abeilles selon la prédation")
+plt.plot(x,y,"r")
+plt.xlabel("Taux de prédation")
+plt.ylabel("Abeilles")
+plt.show()
